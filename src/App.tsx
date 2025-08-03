@@ -1,0 +1,97 @@
+import React, { useState, useEffect } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import LoginForm from './components/Auth/LoginForm';
+import Navigation from './components/Layout/Navigation';
+import Header from './components/Layout/Header';
+import AdminDashboard from './components/Dashboard/AdminDashboard';
+import TeacherDashboard from './components/Dashboard/TeacherDashboard';
+import StudentDashboard from './components/Dashboard/StudentDashboard';
+
+const AppContent: React.FC = () => {
+  const { user, isLoading } = useAuth();
+  const [currentPage, setCurrentPage] = useState('dashboard');
+
+  useEffect(() => {
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Memuat aplikasi...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <LoginForm />;
+  }
+
+  const renderContent = () => {
+    if (currentPage === 'dashboard') {
+      switch (user.role) {
+        case 'admin':
+          return <AdminDashboard />;
+        case 'teacher':
+          return <TeacherDashboard />;
+        case 'student':
+          return <StudentDashboard />;
+        default:
+          return <div>Role tidak dikenali</div>;
+      }
+    }
+    
+    // Placeholder for other pages
+    return (
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 text-center">
+        <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          Halaman {currentPage}
+        </h2>
+        <p className="text-gray-600">
+          Fitur ini sedang dalam pengembangan dan akan segera tersedia.
+        </p>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row">
+      {/* Sidebar Navigation */}
+      <div className="w-full lg:w-64 xl:w-80 flex-shrink-0 lg:h-screen lg:sticky lg:top-0">
+        <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        <Header />
+        <main className="flex-1 p-3 sm:p-4 lg:p-6">
+          {renderContent()}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+};
+
+export default App;
