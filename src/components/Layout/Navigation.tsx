@@ -69,63 +69,123 @@ const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <>
-      {/* Mobile/Tablet Overlay */}
-      {!isCollapsed && (
+      {/* Mobile Navigation */}
+      <div className="lg:hidden">
+        {/* Mobile Header */}
+        <div className="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-gray-900">LMS Pesantren</h1>
+              </div>
+            </div>
+            <button
+              onClick={onToggleCollapse}
+              className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        {!isCollapsed && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-50"
+            onClick={onToggleCollapse}
+          />
+        )}
+
+        {/* Mobile Menu */}
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-          onClick={onToggleCollapse}
-        />
-      )}
-      
-      <nav className={`bg-white shadow-lg border-r border-gray-200 h-full transition-all duration-300 ease-in-out z-50 ${
-        isCollapsed 
-          ? 'w-16 lg:w-20' 
-          : 'w-64 lg:w-80'
-      } ${
-        isCollapsed 
-          ? 'fixed lg:relative' 
-          : 'fixed lg:relative'
-      }`}>
-        <div className={`p-4 ${isCollapsed ? 'sm:p-3' : 'sm:p-6'}`}>
-          {/* Header with Toggle Button */}
-          <div className="flex items-center justify-between mb-6 sm:mb-8">
+          className={`fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+            isCollapsed ? '-translate-x-full' : 'translate-x-0'
+          }`}
+        >
+          <div className="p-6">
+            {/* Mobile Menu Header */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                  <GraduationCap className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-gray-900">LMS Pesantren</h1>
+                  <p className="text-sm text-gray-500">Sistem Pembelajaran</p>
+                </div>
+              </div>
+              <button
+                onClick={onToggleCollapse}
+                className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Mobile Menu Items */}
+            <ul className="space-y-2">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = currentPage === item.id;
+                
+                return (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => {
+                        onPageChange(item.id);
+                        onToggleCollapse(); // Close menu after selection
+                      }}
+                      className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                        isActive
+                          ? 'bg-emerald-100 text-emerald-700 shadow-sm'
+                          : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 flex-shrink-0" />
+                      <span className="font-medium text-sm">{item.label}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Navigation */}
+      <nav className="hidden lg:block bg-white shadow-lg border-r border-gray-200 h-full transition-all duration-300 ease-in-out">
+        <div className={`p-4 ${isCollapsed ? 'p-3' : 'p-6'}`}>
+          {/* Desktop Header with Toggle Button */}
+          <div className="flex items-center justify-between mb-8">
             <div className={`flex items-center transition-all duration-300 ${
-              isCollapsed ? 'justify-center w-full' : 'space-x-2 sm:space-x-3'
+              isCollapsed ? 'justify-center w-full' : 'space-x-3'
             }`}>
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-                <GraduationCap className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                <GraduationCap className="w-6 h-6 text-white" />
               </div>
               {!isCollapsed && (
                 <div>
-                  <h1 className="text-base sm:text-xl font-bold text-gray-900">LMS Pesantren</h1>
-                  <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Sistem Pembelajaran</p>
+                  <h1 className="text-xl font-bold text-gray-900">LMS Pesantren</h1>
+                  <p className="text-sm text-gray-500">Sistem Pembelajaran</p>
                 </div>
               )}
             </div>
-            
-            {/* Toggle Button - Only show on mobile/tablet */}
-            <button
-              onClick={onToggleCollapse}
-              className="lg:hidden p-2 text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              {isCollapsed ? (
-                <Menu className="w-5 h-5" />
-              ) : (
-                <X className="w-5 h-5" />
-              )}
-            </button>
           </div>
 
           {/* Desktop Toggle Button */}
           <button
             onClick={onToggleCollapse}
-            className={`hidden lg:flex items-center justify-center w-full p-2 mb-4 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors ${
+            className={`flex items-center justify-center w-full p-2 mb-4 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors ${
               isCollapsed ? 'mb-6' : ''
             }`}
           >
             <Menu className="w-5 h-5" />
           </button>
 
+          {/* Desktop Menu Items */}
           <ul className="space-y-2">
             {menuItems.map((item) => {
               const Icon = item.icon;
@@ -138,7 +198,7 @@ const Navigation: React.FC<NavigationProps> = ({
                     className={`w-full flex items-center transition-all duration-200 rounded-lg ${
                       isCollapsed 
                         ? 'justify-center p-3' 
-                        : 'space-x-2 sm:space-x-3 px-3 sm:px-4 py-2 sm:py-3'
+                        : 'space-x-3 px-4 py-3'
                     } ${
                       isActive
                         ? 'bg-emerald-100 text-emerald-700 shadow-sm'
@@ -146,9 +206,9 @@ const Navigation: React.FC<NavigationProps> = ({
                     }`}
                     title={isCollapsed ? item.label : undefined}
                   >
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                    <Icon className="w-5 h-5 flex-shrink-0" />
                     {!isCollapsed && (
-                      <span className="font-medium text-xs sm:text-sm truncate">
+                      <span className="font-medium text-sm truncate">
                         {item.label}
                       </span>
                     )}
