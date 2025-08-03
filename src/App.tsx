@@ -10,6 +10,7 @@ import StudentDashboard from './components/Dashboard/StudentDashboard';
 const AppContent: React.FC = () => {
   const { user, isLoading } = useAuth();
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   useEffect(() => {
     // Register service worker for PWA
@@ -68,15 +69,28 @@ const AppContent: React.FC = () => {
     );
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row">
       {/* Sidebar Navigation */}
-      <div className="w-full lg:w-64 xl:w-80 flex-shrink-0 lg:h-screen lg:sticky lg:top-0">
-        <Navigation currentPage={currentPage} onPageChange={setCurrentPage} />
+      <div className={`flex-shrink-0 lg:h-screen lg:sticky lg:top-0 ${
+        isSidebarCollapsed ? 'w-16 lg:w-20' : 'w-64 lg:w-80'
+      }`}>
+        <Navigation 
+          currentPage={currentPage} 
+          onPageChange={setCurrentPage}
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapse={toggleSidebar}
+        />
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className={`flex-1 flex flex-col transition-all duration-300 ${
+        isSidebarCollapsed ? 'lg:ml-0' : 'lg:ml-0'
+      }`}>
         <Header />
         <main className="flex-1 p-3 sm:p-4 lg:p-6">
           {renderContent()}
