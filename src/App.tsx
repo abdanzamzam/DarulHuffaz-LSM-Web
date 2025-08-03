@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { useAppSelector, useAppDispatch } from './store/hooks';
+import { toggleSidebar, setCurrentPage } from './store/slices/uiSlice';
 import LoginForm from './components/Auth/LoginForm';
 import Navigation from './components/Layout/Navigation';
 import Header from './components/Layout/Header';
 import AdminDashboard from './components/Dashboard/AdminDashboard';
 import TeacherDashboard from './components/Dashboard/TeacherDashboard';
 import StudentDashboard from './components/Dashboard/StudentDashboard';
+import ClassesPage from './components/Classes/ClassesPage';
 
 const AppContent: React.FC = () => {
   const { user, isLoading } = useAuth();
-  const [currentPage, setCurrentPage] = useState('dashboard');
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const dispatch = useAppDispatch();
+  const { currentPage, isSidebarCollapsed } = useAppSelector(state => state.ui);
 
   useEffect(() => {
     // Register service worker for PWA
@@ -54,6 +57,8 @@ const AppContent: React.FC = () => {
         default:
           return <div>Role tidak dikenali</div>;
       }
+    } else if (currentPage === 'classes') {
+      return <ClassesPage />;
     }
     
     // Placeholder for other pages
@@ -69,8 +74,12 @@ const AppContent: React.FC = () => {
     );
   };
 
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
+  const handleToggleSidebar = () => {
+    dispatch(toggleSidebar());
+  };
+  
+  const handlePageChange = (page: string) => {
+    dispatch(setCurrentPage(page));
   };
 
   return (
@@ -79,9 +88,9 @@ const AppContent: React.FC = () => {
       <div className="lg:hidden">
         <Navigation 
           currentPage={currentPage} 
-          onPageChange={setCurrentPage}
+          onPageChange={handlePageChange}
           isCollapsed={isSidebarCollapsed}
-          onToggleCollapse={toggleSidebar}
+          onToggleCollapse={handleToggleSidebar}
         />
       </div>
 
@@ -92,9 +101,9 @@ const AppContent: React.FC = () => {
         }`}>
           <Navigation 
             currentPage={currentPage} 
-            onPageChange={setCurrentPage}
+            onPageChange={handlePageChange}
             isCollapsed={isSidebarCollapsed}
-            onToggleCollapse={toggleSidebar}
+            onToggleCollapse={handleToggleSidebar}
           />
         </div>
         
