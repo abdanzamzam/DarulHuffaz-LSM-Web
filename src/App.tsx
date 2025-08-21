@@ -9,6 +9,8 @@ import AdminDashboard from './components/Dashboard/AdminDashboard';
 import TeacherDashboard from './components/Dashboard/TeacherDashboard';
 import StudentDashboard from './components/Dashboard/StudentDashboard';
 import ClassesPage from './components/Classes/ClassesPage';
+import DiscussionForum from './components/Discussion/DiscussionForum';
+import QuizComponent from './components/Learning/QuizComponent';
 
 const AppContent: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -59,6 +61,22 @@ const AppContent: React.FC = () => {
       }
     } else if (currentPage === 'classes') {
       return <ClassesPage />;
+    } else if (currentPage === 'discussions') {
+      return <DiscussionForum title="Forum Diskusi Kelas" />;
+    } else if (currentPage === 'quizzes') {
+      // Tampilkan daftar kuis
+    } else if (currentPage === 'quiz-detail' && quizId) {
+      return (
+        <QuizComponent 
+          quizId={quizId}
+          title={currentQuiz.title}
+          description={currentQuiz.description}
+          timeLimit={currentQuiz.timeLimit}
+          questions={currentQuiz.questions}
+          quizType={currentQuiz.type}
+          onComplete={(score, answers) => handleQuizComplete(quizId, score, answers)}
+        />
+      );
     }
     
     // Placeholder for other pages

@@ -91,3 +91,59 @@ export interface Attendance {
   status: 'present' | 'absent' | 'late';
   createdBy: string;
 }
+
+export interface Discussion {
+  id: string;
+  classId?: string;
+  moduleId?: string;
+  title: string;
+  posts: DiscussionPost[];
+  createdAt: Date;
+}
+
+export interface DiscussionPost {
+  id: string;
+  discussionId: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  userRole: 'admin' | 'teacher' | 'student';
+  content: string;
+  createdAt: Date;
+  likes: number;
+  replies: DiscussionReply[];
+}
+
+export interface DiscussionReply {
+  id: string;
+  postId: string;
+  userId: string;
+  userName: string;
+  userAvatar?: string;
+  userRole: 'admin' | 'teacher' | 'student';
+  content: string;
+  createdAt: Date;
+  likes: number;
+}
+
+export interface VideoProgress {
+  id: string;
+  studentId: string;
+  moduleId: string;
+  videoId: string;
+  currentTime: number;
+  completed: boolean;
+  completedAt?: Date;
+}
+
+export interface QuizResult {
+  id: string;
+  quizId: string;
+  studentId: string;
+  score: number;
+  answers: Record<string, string>;
+  completedAt: Date;
+  gradedAt?: Date;
+  gradedBy?: string;
+  feedback?: string;
+}
