@@ -11,7 +11,8 @@ import {
   ClipboardList,
   Award,
   Menu,
-  X
+  X,
+  User
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -33,6 +34,7 @@ const Navigation: React.FC<NavigationProps> = ({
   const getMenuItems = () => {
     const commonItems = [
       { id: 'dashboard', label: 'Dashboard', icon: Home },
+      { id: 'profile', label: 'Profil Saya', icon: User },
     ];
 
     switch (user?.role) {

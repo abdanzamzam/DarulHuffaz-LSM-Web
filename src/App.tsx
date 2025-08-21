@@ -11,6 +11,8 @@ import StudentDashboard from './components/Dashboard/StudentDashboard';
 import ClassesPage from './components/Classes/ClassesPage';
 import DiscussionForum from './components/Discussion/DiscussionForum';
 import QuizComponent from './components/Learning/QuizComponent';
+import UserProfile from './components/Profile/UserProfile';
+import EditProfile from './components/Profile/EditProfile';
 
 const AppContent: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -63,6 +65,10 @@ const AppContent: React.FC = () => {
       return <ClassesPage />;
     } else if (currentPage === 'discussions') {
       return <DiscussionForum title="Forum Diskusi Kelas" />;
+    } else if (currentPage === 'profile') {
+      return <UserProfile />;
+    } else if (currentPage === 'edit-profile') {
+      return <EditProfile />;
     } else if (currentPage === 'quizzes') {
       // Tampilkan daftar kuis
     } else if (currentPage === 'quiz-detail' && quizId) {
