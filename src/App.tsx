@@ -119,8 +119,8 @@ const AppContent: React.FC = () => {
       </div>
 
       {/* Desktop Sidebar */}
-      <div className="hidden lg:flex lg:h-screen">
-        <div className={`flex-shrink-0 lg:h-screen lg:sticky lg:top-0 ${
+      <div className="hidden lg:flex lg:h-screen overflow-hidden">
+        <div className={`flex-shrink-0 sticky top-0 h-screen overflow-y-auto ${
           isSidebarCollapsed ? 'w-20' : 'w-80'
         }`}>
           <Navigation 
@@ -132,7 +132,7 @@ const AppContent: React.FC = () => {
         </div>
         
         {/* Main Content */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-y-auto">
           <Header />
           <main className="flex-1 p-6">
             {renderContent()}

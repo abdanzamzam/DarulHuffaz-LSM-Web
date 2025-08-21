@@ -81,7 +81,7 @@ const Navigation: React.FC<NavigationProps> = ({
                 <GraduationCap className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-gray-900">LMS Pesantren</h1>
+                <h1 className="text-lg font-bold text-gray-900">LMS Darul Huffaz</h1>
               </div>
             </div>
             <button
@@ -115,7 +115,7 @@ const Navigation: React.FC<NavigationProps> = ({
                   <GraduationCap className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">LMS Pesantren</h1>
+                  <h1 className="text-xl font-bold text-gray-900">LMS Darul Huffaz</h1>
                   <p className="text-sm text-gray-500">Sistem Pembelajaran</p>
                 </div>
               </div>
@@ -170,7 +170,7 @@ const Navigation: React.FC<NavigationProps> = ({
               </div>
               {!isCollapsed && (
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">LMS Pesantren</h1>
+                  <h1 className="text-xl font-bold text-gray-900">LMS Darul Huffaz</h1>
                   <p className="text-sm text-gray-500">Sistem Pembelajaran</p>
                 </div>
               )}

@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
           <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
             <GraduationCap className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">LMS Pesantren</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">LMS Darul Huffaz</h1>
           <p className="text-sm sm:text-base text-gray-600">Sistem Pembelajaran Digital</p>
         </div>
 
