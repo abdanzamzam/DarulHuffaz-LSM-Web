@@ -13,6 +13,7 @@ import DiscussionForum from './components/Discussion/DiscussionForum';
 import QuizComponent from './components/Learning/QuizComponent';
 import UserProfile from './components/Profile/UserProfile';
 import EditProfile from './components/Profile/EditProfile';
+import UsersManagement from './components/Users/UsersManagement';
 
 const AppContent: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -69,6 +70,8 @@ const AppContent: React.FC = () => {
       return <UserProfile />;
     } else if (currentPage === 'edit-profile') {
       return <EditProfile />;
+    } else if (currentPage === 'users') {
+      return <UsersManagement />;
     } else if (currentPage === 'quizzes') {
       // Tampilkan daftar kuis
     } else if (currentPage === 'quiz-detail' && quizId) {
